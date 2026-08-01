@@ -1,8 +1,91 @@
+/* KelOS boot screen */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    overflow: hidden;
+    background: #000;
+}
+
+/* Boot screen: full-screen terminal */
 #boot-screen {
-    background: black;
-    color : lime;
-    font-family: monospace;
-    width: 100vw;
-    height: 100vh;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #000;
+    color: #33ff33;
+    font-family: "Fira Code", "Cascadia Code", Consolas, "Courier New", monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.6s ease;
+}
+
+/* Fade-out before the desktop is revealed */
+#boot-screen.done {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.boot-wrap {
+    width: min(560px, 88vw);
     padding: 20px;
 }
+
+.boot-title {
+    margin: 0 0 28px;
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-shadow: 0 0 20px rgba(51, 255, 51, 0.5);
+}
+
+.boot-log {
+    min-height: 150px;
+    margin-bottom: 18px;
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+.boot-line {
+    opacity: 0;
+    animation: bootFadeIn 0.18s ease forwards;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+@keyframes bootFadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Progress bar */
+.boot-bar {
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(51, 255, 51, 0.15);
+    overflow: hidden;
+}
+
+.boot-bar i {
+    display: block;
+    width: 0;
+    height: 100%;
+    border-radius: 2px;
+    background: #33ff33;
+    box-shadow: 0 0 12px rgba(51, 255, 51, 0.8);
+    transition: width 0.25s ease;
+}
+
